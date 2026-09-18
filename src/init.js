@@ -50,7 +50,15 @@ async function readJsonIfExists(filePath) {
   }
 }
 
-async function detectPackageManager(targetDir) {
+async function detectPackageManager(targetDir, packageJson) {
+  const declared = packageJson?.packageManager;
+  if (typeof declared === "string") {
+    const name = declared.split("@", 1)[0];
+    if (["pnpm", "npm", "yarn", "bun"].includes(name)) {
+      return name;
+    }
+  }
+
   const candidates = [
     ["pnpm-lock.yaml", "pnpm"],
     ["package-lock.json", "npm"],
@@ -108,7 +116,7 @@ async function detectCi(targetDir) {
 
 export async function inspectRepository(targetDir) {
   const packageJson = await readJsonIfExists(path.join(targetDir, "package.json"));
-  const packageManager = await detectPackageManager(targetDir);
+  const packageManager = await detectPackageManager(targetDir, packageJson);
   const directories = await detectDirectories(targetDir);
   const ciWorkflows = await detectCi(targetDir);
 

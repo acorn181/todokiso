@@ -116,3 +116,43 @@ test("init refuses to overwrite an existing conflicting file", async () => {
     await rm(target, { recursive: true, force: true });
   }
 });
+
+
+test("package.json packageManager is detected without a lockfile", async () => {
+  const target = await tempRepo();
+
+  try {
+    await writeFile(
+      path.join(target, "package.json"),
+      JSON.stringify(
+        {
+          name: "itteko-like",
+          packageManager: "pnpm@10.17.1",
+          scripts: {
+            typecheck: "tsc --noEmit",
+            test: "vitest run",
+          },
+        },
+        null,
+        2,
+      ),
+    );
+
+    const plan = await createBootstrapPlan(target, {
+      assetRoot,
+      version: "0.1.0-test",
+      date: "2026-09-18",
+    });
+
+    assert.equal(plan.facts.packageManager, "pnpm");
+
+    const profile = plan.entries.find(
+      (entry) => entry.relativePath === "docs/REPOSITORY_PROFILE.md",
+    )?.content;
+
+    assert.match(profile, /Package manager: pnpm/);
+    assert.match(profile, /pnpm typecheck/);
+  } finally {
+    await rm(target, { recursive: true, force: true });
+  }
+});
