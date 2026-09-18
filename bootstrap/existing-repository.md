@@ -189,7 +189,33 @@ Output:
 
 Also define who may merge / release.
 
-## Step 7 — Run the bootstrap review
+## Step 7 — Validate against the target repository
+
+Bootstrap output must pass through the target repository's normal quality gates before merge.
+
+At minimum:
+
+- run the repository formatter on target-local generated files such as `docs/REPOSITORY_PROFILE.md`
+- run the repository's required lint / format-check / test / build checks that apply to documentation or process changes
+- confirm the generated files do not introduce unrelated formatting changes elsewhere
+
+### Vendored files and formatters
+
+Files under `docs/todokiso/` are a vendored snapshot. Choose one explicit policy:
+
+1. **Format the vendored copy locally.**
+   - Apply the target repository's formatter only to the copied todokiso files.
+   - Treat formatting-only differences as a local, non-semantic adaptation.
+   - Record that adaptation in `docs/todokiso/SOURCE.md`.
+2. **Exclude the vendored directory from target formatting.**
+   - Add a narrow formatter/linter ignore for `docs/todokiso/`.
+   - Do not disable formatting checks for unrelated project documentation.
+
+The Repository Profile is target-local, not vendored, so it should normally follow the target repository's formatter.
+
+todokiso `init` does not automatically run the target formatter in v0.1. Running a repository-wide formatter could create unrelated changes, so formatting remains an explicit bootstrap step.
+
+## Step 8 — Run the bootstrap review
 
 Before calling the bootstrap complete, verify:
 
@@ -202,10 +228,12 @@ Before calling the bootstrap complete, verify:
 - [ ] Work Package template is self-contained
 - [ ] existing GitHub templates were not accidentally destroyed
 - [ ] no unrelated product behavior changed
+- [ ] target formatter / format check passes, or a narrow documented exception exists
+- [ ] required target-repository CI checks pass
 
 The bootstrap PR should ideally contain process and documentation changes only.
 
-## Step 8 — Dogfood one real task
+## Step 9 — Dogfood one real task
 
 After the bootstrap PR merges, choose one bounded real task.
 
@@ -228,7 +256,7 @@ Request
 
 Do not retroactively pretend that a task implemented before the bootstrap followed todokiso.
 
-## Step 9 — Record friction
+## Step 10 — Record friction
 
 During the first dogfood task, record every step that feels manual or ambiguous.
 
