@@ -6,6 +6,7 @@ import test from "node:test";
 import {
   applyBootstrapPlan,
   createBootstrapPlan,
+  renderSource,
 } from "../src/init.js";
 
 const assetRoot = path.resolve(".");
@@ -155,4 +156,19 @@ test("package.json packageManager is detected without a lockfile", async () => {
   } finally {
     await rm(target, { recursive: true, force: true });
   }
+});
+
+
+test("SOURCE records an exact source revision when available", () => {
+  const source = renderSource(
+    "0.1.0-test",
+    "2026-09-18",
+    "a2eb8de35e9e0d598532dc9796f071d6a43aba38",
+  );
+
+  assert.match(source, /Package revision: todokiso@0\.1\.0-test/);
+  assert.match(
+    source,
+    /Source revision: `a2eb8de35e9e0d598532dc9796f071d6a43aba38`/,
+  );
 });
