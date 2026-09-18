@@ -122,5 +122,8 @@ export async function main(args) {
   console.log(
     "Next: review docs/REPOSITORY_PROFILE.md and resolve every TODO / Unknown.",
   );
+  console.log(
+    "Then run the target repository formatter and required checks before merging the bootstrap.",
+  );
   return 0;
 }
