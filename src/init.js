@@ -303,12 +303,20 @@ Document labels, automated triggers, vendor-specific permissions, agent setup, s
 `;
 }
 
-export function renderSource(version, date = new Date().toISOString().slice(0, 10)) {
+export function renderSource(
+  version,
+  date = new Date().toISOString().slice(0, 10),
+  sourceRevision = null,
+) {
+  const sourceLine = sourceRevision
+    ? `- Source revision: \`${sourceRevision}\`\n`
+    : "";
+
   return `# todokiso source
 
 - Upstream: https://github.com/acorn181/todokiso
 - Package revision: todokiso@${version}
-- Bootstrapped: ${date}
+${sourceLine}- Bootstrapped: ${date}
 
 ## Local adaptations
 
@@ -342,6 +350,7 @@ export async function createBootstrapPlan(
     assetRoot = PACKAGE_ROOT,
     version = "0.1.0",
     date = new Date().toISOString().slice(0, 10),
+    sourceRevision = null,
   } = {},
 ) {
   const resolvedTarget = path.resolve(targetDir);
@@ -357,7 +366,7 @@ export async function createBootstrapPlan(
     await plannedFile(
       resolvedTarget,
       "docs/todokiso/SOURCE.md",
-      renderSource(version, date),
+      renderSource(version, date, sourceRevision),
     ),
   );
   entries.push(
