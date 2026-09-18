@@ -83,9 +83,29 @@ bootstrap/
 
 ## Getting started
 
-Start with the manual bootstrap in bootstrap/README.md.
+The v0.1 CLI bootstraps todokiso into an existing repository without overwriting conflicting files.
 
-v0.1 intentionally avoids a CLI. The first goal is to prove the process in real repositories, observe what is truly portable, and only then automate it.
+From a source checkout:
+
+~~~bash
+node ./bin/todokiso.js init --dry-run ../your-repository
+node ./bin/todokiso.js init ../your-repository
+~~~
+
+The package is structured so it can later be published and run as:
+
+~~~bash
+pnpm dlx todokiso init --dry-run
+pnpm dlx todokiso init
+~~~
+
+The npm package has not been published yet.
+
+`init` inspects basic repository facts, vendors a pinned local snapshot of the core workflow and templates under `docs/todokiso/`, creates `SOURCE.md`, and generates a draft `docs/REPOSITORY_PROFILE.md`.
+
+**Generated repository facts are only a draft.** Resolve every `TODO / Unknown` before using the profile as an Executor contract.
+
+For the underlying manual procedure and semantics, see `bootstrap/README.md` and `bootstrap/existing-repository.md`.
 
 ## Project-specific information
 
@@ -103,4 +123,4 @@ The question behind the project is simple:
 
 ## Status
 
-Early v0.1 extraction. The first external dogfood target is expected to be another repository before automation or packaging is added.
+Early v0.1. The portable workflow is extracted and the first bootstrap CLI is being implemented. The next milestone is to dogfood `todokiso init` in a separate repository before publishing the package.
