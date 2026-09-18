@@ -14,8 +14,9 @@ For an actionable, file-by-file procedure, use **[Existing Repository Bootstrap 
 6. Map Decision Owner / Planner / Executor / Reviewer.
 7. Define Go / No-Go and Ready for Implementation approval ownership.
 8. Integrate Issue / PR templates without overwriting repository-specific policy.
-9. Review the bootstrap as a process-only change.
-10. Dogfood one real, bounded task and record friction.
+9. Run the target repository's formatter and required checks on the bootstrap changes.
+10. Review the bootstrap as a process-only change.
+11. Dogfood one real, bounded task and record friction.
 
 ## What belongs where
 
@@ -68,5 +69,6 @@ Later tooling may automate this update, but the update should remain explicit an
 - at least one Work Package Issue can be made self-contained
 - an Executor can act without reconstructing the parent discussion
 - a Reviewer can trace the PR back to the approved objective
+- generated files satisfy the target repository's formatting and required checks, or an explicit local exception is documented
 
 After bootstrap, the first real task is the dogfood test—not the bootstrap itself.
