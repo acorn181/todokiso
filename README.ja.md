@@ -64,9 +64,29 @@ todokiso が定義するのは「誰がやるか」ではなく「何を担う�
 
 ## 使い始める
 
-まず bootstrap/README.md の Manual Bootstrap を使います。
+v0.1 CLI は、既存ファイルを黙って上書きせずに todokiso を既存リポジトリへ Bootstrap します。
 
-v0.1 では意図的に CLI を作りません。実リポジトリへ適用し、本当に共通化できるもの・生成すべきもの・人間が決めるべきものを見極めてから自動化します。
+ソースチェックアウトから試す場合:
+
+~~~bash
+node ./bin/todokiso.js init --dry-run ../your-repository
+node ./bin/todokiso.js init ../your-repository
+~~~
+
+将来的に npm へ公開した後は、次の形で実行できる構成を想定しています。
+
+~~~bash
+pnpm dlx todokiso init --dry-run
+pnpm dlx todokiso init
+~~~
+
+npm package はまだ公開していません。
+
+`init` はリポジトリの基本情報を検出し、`docs/todokiso/` に core workflow と templates のローカルスナップショットを配置し、`SOURCE.md` と `docs/REPOSITORY_PROFILE.md` のドラフトを生成します。
+
+**自動生成された Repository Profile はあくまでドラフトです。** Executor の契約として使う前に、すべての `TODO / Unknown` を人間が確認・解消してください。
+
+手作業での意味論と詳細手順は `bootstrap/README.md` と `bootstrap/existing-repository.md` を参照してください。
 
 ## Repository Profile
 
@@ -84,4 +104,4 @@ v0.1 では意図的に CLI を作りません。実リポジトリへ適用し�
 
 ## Status
 
-v0.1 抽出中。まず別リポジトリで dogfood し、その後に CLI や package 化を検討します。
+v0.1 初期段階。portable workflow の抽出は完了し、最小 Bootstrap CLI を実装中です。package 公開前に、別リポジトリで `todokiso init` を dogfood するのが次のマイルストーンです。
