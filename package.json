@@ -1,0 +1,40 @@
+{
+  "name": "todokiso",
+  "version": "0.1.0",
+  "description": "A portable, role-based, tool-agnostic SDLC for carrying intent into working software.",
+  "type": "module",
+  "bin": {
+    "todokiso": "./bin/todokiso.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "core",
+    "templates",
+    "bootstrap",
+    "README.md",
+    "README.ja.md"
+  ],
+  "scripts": {
+    "check": "node --check bin/todokiso.js && node --check src/cli.js && node --check src/init.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acorn181/todokiso.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acorn181/todokiso/issues"
+  },
+  "homepage": "https://github.com/acorn181/todokiso#readme",
+  "keywords": [
+    "sdlc",
+    "workflow",
+    "development-process",
+    "ai",
+    "agents"
+  ]
+}
